@@ -22,7 +22,7 @@ export const Footer = () => {
 					<div>
 						<Link
 							href="https://s-soumyakanta.com"
-							className="mb-20 text-center text-lg font-semibold text-slate-900 dark:text-slate-50 md:text-2xl"
+							className="mb-20 text-center text-base font-semibold text-slate-900 dark:text-slate-50 md:text-2xl"
 						>
 							{publication.title}
 						</Link>
