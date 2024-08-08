@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { useState } from 'react';
+import { Moon, Sun } from 'lucide-react';
 import { PublicationNavbarItem } from '../generated/graphql';
 import { Button } from './button';
 import { Container } from './container';
@@ -14,13 +15,27 @@ function hasUrl(
   return !!navbarItem.url && navbarItem.url.length > 0;
 }
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '/';
-  const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>();
+  const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(false);
+  const [theme, setTheme] = useState<string>('light');
   const { publication } = useAppContext();
   const navbarItems = publication.preferences.navbarItems.filter(hasUrl);
   const visibleItems = navbarItems.slice(0, 3);
   const hiddenItems = navbarItems.slice(3);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
 
   const toggleSidebar = () => {
     setIsSidebarVisible((prevVisibility) => !prevVisibility);
@@ -82,18 +97,30 @@ export const Header = () => {
         <div className="flex items-center gap-5 text-slate-300">
           <PublicationLogo />
         </div>
-        <nav className="hidden lg:block">
-          {navList}
-        </nav>
-        <div className="lg:hidden flex items-center">
+        <div className="hidden lg:flex items-center gap-5">
+          <nav className='text-black dark:text-white flex space-x-2'>{navList}        <button
+            onClick={toggleTheme}
+            className="transition-200 block rounded-full p-2 transition-colors hover:bg-white hover:text-black dark:hover:bg-neutral-800 dark:hover:text-white"
+          >
+            {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5 text-white" />}
+          </button></nav>
+
+        </div>
+        <div className="lg:hidden flex items-center gap-3">
+
+          <button
+            onClick={toggleTheme}
+            className="transition-200 block rounded-full p-2 transition-colors hover:bg-white hover:text-black dark:hover:bg-neutral-800 dark:hover:text-white"
+          >
+            {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5 text-white" />}
+          </button>
           <Button
             type="outline"
             label=""
-            icon={<HamburgerSVG className="h-5 w-5 stroke-current" />}
-            className="rounded-xl border-transparent !px-3 !py-2 text-white hover:bg-slate-900 dark:hover:bg-neutral-800"
+            icon={<HamburgerSVG className="h-5 w-5 stroke-current text-black dark:text-white" />}
+            className="rounded-xl  !px-3 !py-2 text-white   hover:bg-slate-100 dark:hover:bg-neutral-800"
             onClick={toggleSidebar}
           />
-
           {isSidebarVisible && (
             <PublicationSidebar navbarItems={navbarItems} toggleSidebar={toggleSidebar} />
           )}

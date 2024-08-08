@@ -6,8 +6,8 @@ export const Footer = () => {
 	const { publication } = useAppContext();
 	const PUBLICATION_LOGO = publication.preferences.logo;
 	return (
-		<footer className="border-t py-10 dark:border-neutral-800  ">
-			<div className="flex items-center justify-between px-5 text-center">
+		<footer className="border-t py-14 dark:border-neutral-800  ">
+			<div className="flex flex-col md:flex-row space-y-4 md:space-y-0 items-center justify-between px-5 text-center">
 				{PUBLICATION_LOGO ? (
 					<div className="mb-20 flex w-full flex-row justify-center">
 						<Link
@@ -22,7 +22,7 @@ export const Footer = () => {
 					<div>
 						<Link
 							href="https://s-soumyakanta.com"
-							className="mb-20 text-center text-base font-semibold text-slate-900 dark:text-slate-50 md:text-2xl"
+							className="mb-20 text-center text-xl font-semibold text-slate-900 dark:text-slate-50 md:text-2xl"
 						>
 							{publication.title}
 						</Link>
