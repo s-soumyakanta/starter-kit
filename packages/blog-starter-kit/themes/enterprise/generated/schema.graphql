@@ -2818,6 +2818,8 @@ type Mutation {
   """Restores a deleted post."""
   restorePost(input: RestorePostInput!): RestorePostPayload!
   retryDocumentationProjectCustomDomainVerification(input: RetryDocumentationProjectCustomDomainVerificationInput!): RetryDocumentationProjectCustomDomainVerificationPayload!
+  """Mutation to revoke documentation project invite"""
+  revokeInviteToDocumentationProject(input: RevokeInviteToDocumentationProjectInput!): RevokeInviteToDocumentationProjectPayload!
   """Revokes a user invitation that was sent to join a publication."""
   revokeUserInviteToPublication(input: RevokeUserInviteToPublicationInput!): RevokeUserInviteToPublicationPayload!
   saveDocumentationPageDraftContent(input: SaveDocumentationPageDraftContentInput!): SaveDocumentationPageDraftContentPayload!
@@ -2857,6 +2859,8 @@ type Mutation {
   updateDocumentationLink(input: UpdateDocumentationLinkInput!): UpdateDocumentationLinkPayload!
   updateDocumentationPageSettings(input: UpdateDocumentationPageSettingsInput!): UpdateDocumentationPageSettingsPayload!
   updateDocumentationProjectSubdomain(input: UpdateDocumentationProjectSubdomainInput!): UpdateDocumentationProjectSubdomainPayload!
+  """Mutation to update a section in a guide """
+  updateDocumentationSection(input: UpdateDocumentationSectionInput!): UpdateDocumentationSectionPayload!
   updatePost(input: UpdatePostInput!): UpdatePostPayload!
   updateRedirectionRule(input: UpdateRedirectionRuleInput!): UpdateRedirectionRulePayload!
   """Updates a reply"""
@@ -4727,6 +4731,22 @@ type RetryDocumentationProjectCustomDomainVerificationPayload {
   project: DocumentationProject
 }
 
+"""Input to revoke a user invitation to join a documentation project."""
+input RevokeInviteToDocumentationProjectInput {
+  """The ID of the invite to revoke."""
+  inviteId: ID!
+  """The ID of the documentation project."""
+  projectId: ID!
+}
+
+"""Response to revoking an invitation to join a documentation project."""
+type RevokeInviteToDocumentationProjectPayload {
+  """The documentation project that was associated with the invite."""
+  project: DocumentationProject
+  """Signifies the success of the mutation."""
+  success: Boolean!
+}
+
 """Input to revoke a user invitation to a publication."""
 input RevokeUserInviteToPublicationInput {
   """The invite ID to revoke."""
@@ -5403,6 +5423,20 @@ input UpdateDocumentationProjectSubdomainInput {
 
 type UpdateDocumentationProjectSubdomainPayload {
   project: DocumentationProject
+}
+
+input UpdateDocumentationSectionInput {
+  guideSlug: String!
+  label: String
+  projectId: ID!
+  sectionId: ID!
+  slug: String
+  visibility: DocumentationSidebarItemVisibility
+}
+
+type UpdateDocumentationSectionPayload {
+  guide: DocumentationGuide
+  section: DocumentationSection
 }
 
 input UpdatePostInput {

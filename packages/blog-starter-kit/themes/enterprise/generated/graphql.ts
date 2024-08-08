@@ -2843,6 +2843,8 @@ export type Mutation = {
   /** Restores a deleted post. */
   restorePost: RestorePostPayload;
   retryDocumentationProjectCustomDomainVerification: RetryDocumentationProjectCustomDomainVerificationPayload;
+  /** Mutation to revoke documentation project invite */
+  revokeInviteToDocumentationProject: RevokeInviteToDocumentationProjectPayload;
   /** Revokes a user invitation that was sent to join a publication. */
   revokeUserInviteToPublication: RevokeUserInviteToPublicationPayload;
   saveDocumentationPageDraftContent: SaveDocumentationPageDraftContentPayload;
@@ -2875,6 +2877,8 @@ export type Mutation = {
   updateDocumentationLink: UpdateDocumentationLinkPayload;
   updateDocumentationPageSettings: UpdateDocumentationPageSettingsPayload;
   updateDocumentationProjectSubdomain: UpdateDocumentationProjectSubdomainPayload;
+  /** Mutation to update a section in a guide  */
+  updateDocumentationSection: UpdateDocumentationSectionPayload;
   updatePost: UpdatePostPayload;
   updateRedirectionRule: UpdateRedirectionRulePayload;
   /** Updates a reply */
@@ -3183,6 +3187,11 @@ export type MutationRetryDocumentationProjectCustomDomainVerificationArgs = {
 };
 
 
+export type MutationRevokeInviteToDocumentationProjectArgs = {
+  input: RevokeInviteToDocumentationProjectInput;
+};
+
+
 export type MutationRevokeUserInviteToPublicationArgs = {
   input: RevokeUserInviteToPublicationInput;
 };
@@ -3281,6 +3290,11 @@ export type MutationUpdateDocumentationPageSettingsArgs = {
 
 export type MutationUpdateDocumentationProjectSubdomainArgs = {
   input: UpdateDocumentationProjectSubdomainInput;
+};
+
+
+export type MutationUpdateDocumentationSectionArgs = {
+  input: UpdateDocumentationSectionInput;
 };
 
 
@@ -5266,6 +5280,23 @@ export type RetryDocumentationProjectCustomDomainVerificationPayload = {
   project?: Maybe<DocumentationProject>;
 };
 
+/** Input to revoke a user invitation to join a documentation project. */
+export type RevokeInviteToDocumentationProjectInput = {
+  /** The ID of the invite to revoke. */
+  inviteId: Scalars['ID']['input'];
+  /** The ID of the documentation project. */
+  projectId: Scalars['ID']['input'];
+};
+
+/** Response to revoking an invitation to join a documentation project. */
+export type RevokeInviteToDocumentationProjectPayload = {
+  __typename?: 'RevokeInviteToDocumentationProjectPayload';
+  /** The documentation project that was associated with the invite. */
+  project?: Maybe<DocumentationProject>;
+  /** Signifies the success of the mutation. */
+  success: Scalars['Boolean']['output'];
+};
+
 /** Input to revoke a user invitation to a publication. */
 export type RevokeUserInviteToPublicationInput = {
   /** The invite ID to revoke. */
@@ -5938,6 +5969,21 @@ export type UpdateDocumentationProjectSubdomainInput = {
 export type UpdateDocumentationProjectSubdomainPayload = {
   __typename?: 'UpdateDocumentationProjectSubdomainPayload';
   project?: Maybe<DocumentationProject>;
+};
+
+export type UpdateDocumentationSectionInput = {
+  guideSlug: Scalars['String']['input'];
+  label?: InputMaybe<Scalars['String']['input']>;
+  projectId: Scalars['ID']['input'];
+  sectionId: Scalars['ID']['input'];
+  slug?: InputMaybe<Scalars['String']['input']>;
+  visibility?: InputMaybe<DocumentationSidebarItemVisibility>;
+};
+
+export type UpdateDocumentationSectionPayload = {
+  __typename?: 'UpdateDocumentationSectionPayload';
+  guide?: Maybe<DocumentationGuide>;
+  section?: Maybe<DocumentationSection>;
 };
 
 export type UpdatePostInput = {
